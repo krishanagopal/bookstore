@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Ensure full page uses theme colors */
+html,
+body {
+  @apply bg-base-200 text-base-content transition-colors duration-300 min-h-screen;
+}
+
