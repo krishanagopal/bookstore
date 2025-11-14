@@ -1,0 +1,27 @@
+{
+  "name": "bookstore",
+  "version": "1.0.0",
+  "description": "mern project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krishanagopal/bookstore.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krishanagopal/bookstore/issues"
+  },
+  "homepage": "https://github.com/krishanagopal/bookstore#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.3",
+    "nodemon": "^3.1.11"
+  }
+}
