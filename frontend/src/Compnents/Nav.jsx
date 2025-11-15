@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
+import { useAuth } from "../Context/Authprovider.jsx";
+import Logout from "./Logout.jsx";
 
 function Nav() {
   const [stickyNav, setStickyNav] = useState(false);
+
+  // 🔹 Get logged-in user from Context
+  const [authUser, setAuthUser] = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setStickyNav(window.scrollY > 0);
@@ -109,22 +114,30 @@ function Nav() {
           <span className="text-sm hidden sm:inline">Dark Mode</span>
         </label>
 
-        {/* Log In Button */}
-        <button
-          className="btn btn-neutral rounded-lg font-semibold"
-          onClick={() => document.getElementById("my_modal_3").showModal()}
-        >
-          Log In
-        </button>
+        {/* 🔹 CONDITIONAL: Show Logout OR Login button */}
+        {authUser ? (
+          <Logout />
+        ) : (
+          <>
+            {/* Log In Button */}
+            <button
+              className="btn btn-neutral rounded-lg font-semibold"
+              onClick={() =>
+                document.getElementById("my_modal_3").showModal()
+              }
+            >
+              Log In
+            </button>
 
-        {/* ✅ Include Both Modals */}
-        <Login />
-        
-       
+            {/* Login Modal */}
+            <Login />
+          </>
+        )}
       </div>
     </div>
   );
 }
 
 export default Nav;
+
 

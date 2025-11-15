@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../Context/Authprovider.jsx";
+
 
 function Login() {
   const navigate = useNavigate();
-
+ const [authUser, setAuthUser] = useAuth();
   // State to hold form data
   const [formData, setFormData] = useState({
     email: "",
@@ -19,10 +22,28 @@ function Login() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault(); // prevent page reload
-    console.log("Login Data:", formData); // ✅ Log user input to console
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const userInfo = {
+    email: formData.email,
+    password: formData.password
   };
+
+  try {
+    const res = await axios.post("http://localhost:4001/user/login", userInfo);
+
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+    setAuthUser(res.data.user);  // ✅ update Context
+
+    alert("Login successful!");
+    document.getElementById("my_modal_3").close();
+
+  } catch (err) {
+    console.error("Login error:", err);
+    alert("Login failed.");
+  }
+};
 
   // Navigate to signup
   const handleSignup = () => {

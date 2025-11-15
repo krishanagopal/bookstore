@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Login from "./Login";
+import axios from "axios";
 
 function Signup() {
   const navigate = useNavigate();
@@ -22,13 +23,27 @@ function Signup() {
   };
 
   // 🔹 Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("📝 Signup Data:", formData);
 
-    // Optionally navigate or handle further logic here
-    // Example: navigate("/welcome");
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const userInfo = {
+    fullName: formData.name,
+    email: formData.email,
+    password: formData.password
   };
+
+  try {
+    const res = await axios.post("http://localhost:4001/user/signup", userInfo);
+    console.log(res.data);
+    alert("Signup successful!");
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+  } catch (err) {
+    console.error("Error during signup:", err);
+    alert("Signup failed. Please try again.");
+  }
+};
+ 
 
   const handleLogin = () => {
     const modal = document.getElementById("sign");

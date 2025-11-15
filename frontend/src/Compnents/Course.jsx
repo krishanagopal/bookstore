@@ -1,9 +1,26 @@
 
 import React from 'react'
-import List from '../assets/List.json'
+
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 function Course() {
+  const[books,setBooks]=useState([])
+  useEffect(()=>{
+   const getBooks=async()=>{
+    try {
+     
+    const res = await axios.get("http://localhost:4001/books");
+    setBooks(res.data);
+     console.log(res.data);
+    } catch (error) {
+      console.log("Error while fetching books",error)
+    }
+    }
+    getBooks();
+  },[])
   return (
     <>
       <div className="max-w-screen-2xl container mx-auto md:px-20 px-4 py-16 text-center">
@@ -45,7 +62,7 @@ function Course() {
 
         {/* Course Cards Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 place-items-center">
-          {List.map((item) => (
+          {books.map((item) => (
             <div
               key={item.id}
               className="group relative  cursor-pointer w-90 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-2xl shadow-lg hover:shadow-[0_0_25px_rgba(236,72,153,0.5)] overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:scale-105"
